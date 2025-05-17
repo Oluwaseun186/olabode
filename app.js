@@ -1,6 +1,9 @@
 const express = require('express');
 const path = require('path');
 const app = express();
+require('dotenv').config(); 
+
+const PORT = process.env.PORT; 
 
 // Set view engine
 app.set('views', path.join(__dirname, 'views'));
@@ -17,7 +20,6 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
-const PORT = process.env.PORT 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });

@@ -142,3 +142,37 @@ body {
 .message-content li {
     margin: 3px 0;
 }
+
+#quick-questions {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 12px 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#quick-questions label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #444;
+}
+
+#quick-questions select {
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #fff;
+    font-size: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: border 0.3s;
+}
+
+#quick-questions select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+#quick-questions {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto 12px auto;
+}

@@ -6,34 +6,25 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initial bot greeting
     setTimeout(() => {
-        addBotMessage("Hello! I'm Olabode chatbot. How can I help you today?");
+        displayBotMessage("Hello! I'm Olabode chatbot. How can I help you today?");
     }, 500);
     
     // Send message when button is clicked
-    sendButton.addEventListener('click', sendMessage);
+    sendButton.addEventListener('click', handleSendMessage);
     
     // Send message when Enter key is pressed
     userInput.addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
-            sendMessage();
+            handleSendMessage();
         }
     });
     
-    const questionSelect = document.getElementById('question-select');
-    questionSelect.addEventListener('change', function () {
-        const selected = this.value;
-        if (selected) {
-            simulateQuestion(selected);  // This will trigger the chatbot as if the user typed it
-            this.value = ''; // Reset to default after sending
-        }
-    });
-
-    function sendMessage() {
+    function handleSendMessage() {
         const message = userInput.value.trim();
         if (message === '') return;
         
         // Add user message to chat
-        addUserMessage(message);
+        displayUserMessage(message);
         userInput.value = '';
         
         // Show typing indicator
@@ -44,11 +35,11 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             typingIndicator.style.display = 'none';
             const botResponse = generateBotResponse(message);
-            addBotMessage(botResponse);
+            displayBotMessage(botResponse);
         }, 1000 + Math.random() * 2000); // Random delay between 1-3 seconds
     }
     
-    function addUserMessage(message) {
+    function displayUserMessage(message) {
         const messageDiv = document.createElement('div');
         messageDiv.className = 'message user-message';
         messageDiv.innerHTML = `<div class="message-content">${escapeHtml(message)}</div>`;
@@ -56,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
     
-    function addBotMessage(message) {
+    function displayBotMessage(message) {
         const messageDiv = document.createElement('div');
         messageDiv.className = 'message bot-message';
         messageDiv.innerHTML = `<div class="message-content">${message}</div>`;
@@ -77,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const lowerCaseMessage = userMessage.toLowerCase();
         
         // 1. Greetings
-        if (/(hi|hello|hey|greetings|sup|what's up|weitin sup|happen|hello there|howdy)/.test(lowerCaseMessage)) {
+        if (/(shut up|stop|quiet)/.test(lowerCaseMessage)) {
             const greetings = [
                 "Hello there! How can I help you today?",
                 "Hi! What can I do for you?",
@@ -101,15 +92,6 @@ document.addEventListener('DOMContentLoaded', function() {
             ];
             return greetings[Math.floor(Math.random() * greetings.length)];
         }
-            //projects
-        else if (/(portfolio|projects)/.test(lowerCaseMessage)) {
-            return `Here's my portfolio: <a href="https://your-portfolio.com" target="_blank">View Projects</a>`;
-        }
-            //contact
-        else if (/(contact|email|reach you)/.test(lowerCaseMessage)) {
-            return `You can email me at <a href="mailto:olabode@example.com">olabode@example.com</a>`;
-        }
-        
 
         // 2. Farewells
         else if (/(bye|goodbye|see ya|cya|exit|quit)/.test(lowerCaseMessage)) {
@@ -206,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Helper functions for interactive elements
     function simulateQuestion(question) {
         document.getElementById('user-input').value = question;
-        document.getElementById('send-button').click();
+        handleSendMessage();
     }
 
     function showHelp() {
