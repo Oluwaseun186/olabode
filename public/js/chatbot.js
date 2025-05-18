@@ -102,12 +102,15 @@ document.addEventListener('DOMContentLoaded', function() {
             return greetings[Math.floor(Math.random() * greetings.length)];
         }
             //projects
-        else if (/(portfolio|projects)/.test(lowerCaseMessage)) {
-            return `Here's my portfolio: <a href="https://your-portfolio.com" target="_blank">View Projects</a>`;
+        else if (/(projects)/.test(lowerCaseMessage)) {
+            return `Here's my portfolio: <a href="https://www.github.com/Oluwaseun186" target="_blank">View Projects</a>`;
+        }
+        else if (/(portfolio)/.test(lowerCaseMessage)) {
+            return `Here's my portfolio: <a href="https://www.linkedin.com/in/olabode-adewumi-62a15496/" target="_blank">View Portfolio</a>`;
         }
             //contact
         else if (/(contact|email|reach you)/.test(lowerCaseMessage)) {
-            return `You can email me at <a href="mailto:olabode@example.com">olabode@example.com</a>`;
+            return `You can email me at <a href="#">adewumibode7@gmail.com</a> <br>Thank you!`;
         }
         
 
