@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Career advice
-        else if (/(career advice|career guides|career tips)/.test(lowerCaseMessage)) {
+        else if (/(career advice|career guides|career tips)/i.test(userMessage)) {
             const careers = [
                 "Nice question! what is your career goal?",
                 "Great question! what is your career goal?",
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Career answer
-        else if (/(graduate| I am a student)/.test(lowerCaseMessage)) {
+        else if (/(graduate|I am a student)/i.test(userMessage)) {
             const graduate = [
                 "Nice response! Are you looking for job opportunities?",
                 "Great response! Are you seeking to enhance your portfolio?"
