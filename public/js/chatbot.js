@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initial bot greeting
     setTimeout(() => {
-        addBotMessage("Hello! I'm Olabode chatbot. How can I help you today?");
+        addBotMessage("Hello! I'm Olabode chatbot. <br>How can I help you today?");
     }, 500);
     
     // Send message when button is clicked
@@ -23,8 +23,8 @@ document.addEventListener('DOMContentLoaded', function() {
     questionSelect.addEventListener('change', function () {
         const selected = this.value;
         if (selected) {
-            simulateQuestion(selected);  // This will trigger the chatbot as if the user typed it
-            this.value = ''; // Reset to default after sending
+            simulateQuestion(selected);
+            this.value = '';
         }
     });
 
@@ -32,20 +32,17 @@ document.addEventListener('DOMContentLoaded', function() {
         const message = userInput.value.trim();
         if (message === '') return;
         
-        // Add user message to chat
         addUserMessage(message);
         userInput.value = '';
         
-        // Show typing indicator
         typingIndicator.style.display = 'block';
         chatMessages.scrollTop = chatMessages.scrollHeight;
         
-        // Simulate bot thinking
         setTimeout(() => {
             typingIndicator.style.display = 'none';
             const botResponse = generateBotResponse(message);
             addBotMessage(botResponse);
-        }, 1000 + Math.random() * 2000); // Random delay between 1-3 seconds
+        }, 1000 + Math.random() * 2000);
     }
     
     function addUserMessage(message) {
@@ -76,8 +73,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function generateBotResponse(userMessage) {
         const lowerCaseMessage = userMessage.toLowerCase();
         
-        // 1. Greetings
-        if (/(hi|hello|hey|greetings|sup|what's up|weitin sup|happen|hello there|howdy)/.test(lowerCaseMessage)) {
+        // Greetings
+        if (/(hi|hello|hey|greetings|sup|what's up|weitin sup|happen|hello there|hey|how are you)/.test(lowerCaseMessage)) {
             const greetings = [
                 "Hello there! How can I help you today?",
                 "Hi! What can I do for you?",
@@ -90,65 +87,93 @@ document.addEventListener('DOMContentLoaded', function() {
             return greetings[Math.floor(Math.random() * greetings.length)];
         }
         
+        // Yoruba greetings
         else if (/(egbon|kilosele)/.test(lowerCaseMessage)) {
             const greetings = [
                 "Omo iya mi, bawo ni?",
                 "Se alafia ni?",
-                "ILe nko?",
+                "Ile nko?",
                 "Gbayi! kini mo le se fun'o?",
                 "Baba alagbala, se o wa da'da?",
                 "egbon! mo wa pa?",
             ];
             return greetings[Math.floor(Math.random() * greetings.length)];
         }
-            //projects
+        
+        // Career advice
+        else if (/(career advice|career guides|career tips)/.test(lowerCaseMessage)) {
+            const careers = [
+                "Nice question! what is your career goal?",
+                "Great question! what is your career goal?",
+                "Interesting question! what is your career goal?",
+                "Good question! what is your career goal?",
+                "Excellent question! what is your career goal?",
+                "Fantastic question! what is your career goal?",
+            ];
+            return careers[Math.floor(Math.random() * careers.length)];
+        }
+        
+        // Career answer
+        else if (/(graduate| I am a student)/.test(lowerCaseMessage)) {
+            const graduate = [
+                "Nice response! Are you looking for job opportunities?",
+                "Great response! Are you seeking to enhance your portfolio?"
+            ];
+            return graduate[Math.floor(Math.random() * graduate.length)];
+        }
+        
+        // Projects
         else if (/(projects)/.test(lowerCaseMessage)) {
             return `Here's my portfolio: <a href="https://www.github.com/Oluwaseun186" target="_blank">View Projects</a>`;
         }
+        
+        // Portfolio
         else if (/(portfolio)/.test(lowerCaseMessage)) {
             return `Here's my portfolio: <a href="https://www.linkedin.com/in/olabode-adewumi-62a15496/" target="_blank">View Portfolio</a>`;
         }
-            //contact
+        
+        // Contact
         else if (/(contact|email|reach you)/.test(lowerCaseMessage)) {
             return `You can email me at <a href="#">adewumibode7@gmail.com</a> <br>Thank you!`;
         }
         
-
-        // 2. Farewells
+        // Farewells
         else if (/(bye|goodbye|see ya|cya|exit|quit)/.test(lowerCaseMessage)) {
             return "Goodbye! Feel free to <a href='/' onclick='window.location.reload()'>return</a> if you have more questions.";
         }
-
-        // 3. Thanks/Appreciation
+    
+        // Thanks/Appreciation
         else if (/(thanks|thank you|appreciate|thx|ty)/.test(lowerCaseMessage)) {
             return "You're welcome! Is there anything else I can help with?";
         }
-
-        // 4. Time/Date queries
+    
+        // Time queries
         else if (/(time|current time|what time is it)/.test(lowerCaseMessage)) {
             return `The current time is ${new Date().toLocaleTimeString()}. <a href="https://time.is/" target="_blank">Check exact time</a>`;
         }
+        
+        // Date queries
         else if (/(date|today's date|what day is it)/.test(lowerCaseMessage)) {
             return `Today's date is ${new Date().toLocaleDateString()}. <a href="https://www.timeanddate.com/" target="_blank">More date info</a>`;
         }
-
-        // 5. Bot identity
+    
+        // Bot identity
         else if (/(who are you|your name|what are you)/.test(lowerCaseMessage)) {
             return "I'm Olabode Chatbot, your friendly AI assistant! <a href='#help' onclick='showHelp()'>Learn what I can do</a>";
         }
-
-        // 6. Help requests
+    
+        // Help requests
         else if (/(help|support|assistance)/.test(lowerCaseMessage)) {
             return `I can help with:
                 <ul>
-                    <li><a href="#" onclick="simulateQuestion('What time is it?')">Time queries</a></li>
+                    <li><a href="#" onclick="simulateQuestion('What time is it?')">Relationship matters</a></li>
                     <li><a href="#" onclick="simulateQuestion('Tell me a joke')">Jokes</a></li>
-                    <li><a href="#" onclick="simulateQuestion('Calculate 5+3')">Simple math</a></li>
-                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">JavaScript help</a></li>
+                    <li><a href="#" onclick="simulateQuestion('Calculate 5+3')">Career advice</a></li>
+                    <li><a href="#" target="_blank">Personal help</a></li>
                 </ul>`;
         }
-
-        // 7. Jokes/Humor
+    
+        // Jokes/Humor
         else if (/(joke|funny|make me laugh)/.test(lowerCaseMessage)) {
             const jokes = [
                 "Why don't scientists trust atoms? Because they make up everything!",
@@ -157,13 +182,13 @@ document.addEventListener('DOMContentLoaded', function() {
             ];
             return jokes[Math.floor(Math.random() * jokes.length)];
         }
-
-        // 8. Weather queries
+    
+        // Weather queries
         else if (/(weather|forecast|temperature)/.test(lowerCaseMessage)) {
             return "I don't have real-time weather data, but you can check: <a href='https://www.weather.com' target='_blank'>Weather.com</a> or <a href='https://www.accuweather.com' target='_blank'>AccuWeather</a>";
         }
-
-        // 9. JavaScript help
+    
+        // JavaScript help
         else if (/(javascript|js|ecmascript)/.test(lowerCaseMessage)) {
             return `JavaScript resources:
                 <ul>
@@ -172,8 +197,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     <li><a href="https://eloquentjavascript.net" target="_blank">Eloquent JavaScript</a></li>
                 </ul>`;
         }
-
-        // 10. Math questions (simple)
+    
+        // Math questions
         else if (/(calculate|what is|math)/.test(lowerCaseMessage)) {
             try {
                 const mathMatch = lowerCaseMessage.match(/(\d+)\s*([+\-*/])\s*(\d+)/);
@@ -196,7 +221,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return "I can do simple math like '5+3' or '10*2'. Try asking me!";
             }
         }
-
+    
         // Default responses
         const randomResponses = [
             "That's interesting! Tell me more.",
@@ -206,7 +231,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return randomResponses[Math.floor(Math.random() * randomResponses.length)];
     }
 
-    // Helper functions for interactive elements
     function simulateQuestion(question) {
         document.getElementById('user-input').value = question;
         document.getElementById('send-button').click();
@@ -214,5 +238,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function showHelp() {
         simulateQuestion('help');
+    }
+    function showCareer() {
+        simulateQuestion('career');
     }
 });
