@@ -2,13 +2,13 @@ name: Node.js Docker CI/CD
 
 on:
   push:
-    branches: ["main"]  # Changed from "origin" to "main"
+    branches: ["origin"] 
   pull_request:
-    branches: ["main"]  # Changed from "origin" to "main"
+    branches: ["origin"] 
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: Oluwaseun7/chatbot  # Uncommented and fixed
+  IMAGE_NAME: Oluwaseun7/chatbot  
 
 jobs:
   build-and-test:
@@ -29,7 +29,7 @@ jobs:
         run: npm test
 
       - name: Build Docker image
-        run: docker build -t ${{ env.IMAGE_NAME }}:1 .  # Using env variable
+        run: docker build -t ${{ env.IMAGE_NAME }}:1 .  
 
       - name: Run Trivy on Filesystem
         uses: aquasecurity/trivy-action@master
@@ -42,7 +42,7 @@ jobs:
 
   deploy:
     needs: build-and-test
-    if: github.ref == 'refs/heads/main'  # Changed from "origin" to "main"
+    if: github.ref == 'refs/heads/main' 
     runs-on: ubuntu-latest
     permissions:  # Added permissions
       contents: read
