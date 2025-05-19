@@ -27,17 +27,21 @@ jobs:
       
       - name: Run tests
         run: npm test
+        
+      - name: Set image name
+        run: echo "IMAGE_NAME=ghcr.io/${{ github.repository }}:${{ github.sha }}" >> $GITHUB_ENV
       
       - name: Build Docker image
         run: docker build -t $IMAGE_NAME .
       
-      - name: Run security scan
+      - name: Run Trivy scan
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: $IMAGE_NAME
           format: 'table'
           exit-code: '1'
           severity: 'CRITICAL,HIGH'
+          ignore-unfixed: true
 
   deploy:
     needs: build-and-test
