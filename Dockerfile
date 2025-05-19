@@ -1,43 +1,31 @@
-# Stage 1: Build
-FROM node:18-alpine AS builder
+# Single stage for non-built Node.js apps
+FROM node:18-alpine
 
-# Set working directory
 WORKDIR /app
 
-# Install dependencies (better caching layer)
+# 1. Copy package files first for better caching
 COPY package.json package-lock.json ./
-RUN npm ci --only=production
 
-# Copy source files
+# 2. Install production dependencies
+RUN npm install
+
+# 3. Copy all other files
 COPY . .
 
-# Copy built files
-#COPY --from=builder /app/dist ./dist
-# OR for non-built apps:
-COPY --from=builder /app ./
-
-# Environment variables
+# 4. Environment variables
 ENV NODE_ENV=production
 ENV PORT=7000
 
-# Security best practices
+# 5. Security settings
 RUN apk add --no-cache dumb-init && \
     chown -R node:node /app
 USER node
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s \
-    CMD node healthcheck.js || exit 1
-
-# Clean up
+# 6. Clean up
 RUN rm -rf /tmp/*
 
 EXPOSE $PORT
 
-# Use dumb-init to handle signals properly
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 
-# Start the app
 CMD ["node", "run", "app.js"]
-# OR for non-built apps:
-# CMD ["node", "server.js"]
