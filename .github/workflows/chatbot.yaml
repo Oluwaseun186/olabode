@@ -8,7 +8,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: Oluwaseun7/chatbot  
+  IMAGE_NAME: chatbot  
 
 jobs:
   build-and-test:
@@ -83,7 +83,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/oluwaseun186/olabode:latest
+          tags: ghcr.io/oluwaseun186/chatbot:1
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -101,4 +101,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: oluwaseun7/${env.IMAGE_NAME}:1
+          tags: oluwaseun7/${{ env.IMAGE_NAME }}:1
