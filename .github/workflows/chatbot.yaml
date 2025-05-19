@@ -38,18 +38,6 @@ jobs:
           scan-ref: '.'
           security-checks: 'vuln,secret,config'
 
-      - name: Run Trivy Filesystem Scan
-        uses: aquasecurity/trivy-action@v0.11.2
-        with:
-          scan-type: fs
-          scan-ref: '.'
-
-      - name: Run Trivy Config Scan
-        uses: aquasecurity/trivy-action@v0.11.2
-        with:
-          scan-type: config
-          scan-ref: '.'
-
   deploy:
     needs: build-and-test
     if: github.ref == 'refs/heads/origin'
