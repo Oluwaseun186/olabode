@@ -11,10 +11,6 @@ RUN npm ci --only=production
 # Copy source files
 COPY . .
 
-# Install dependencies only
-COPY --from=builder /app/package.json /app/package-lock.json ./
-COPY --from=builder /app/node_modules ./node_modules
-
 # Copy built files
 #COPY --from=builder /app/dist ./dist
 # OR for non-built apps:
