@@ -25,9 +25,9 @@ COPY --from=builder /app/package.json /app/package-lock.json ./
 COPY --from=builder /app/node_modules ./node_modules
 
 # Copy built files
-COPY --from=builder /app/dist ./dist
+#COPY --from=builder /app/dist ./dist
 # OR for non-built apps:
-# COPY --from=builder /app ./
+COPY --from=builder /app ./
 
 # Environment variables
 ENV NODE_ENV=production
