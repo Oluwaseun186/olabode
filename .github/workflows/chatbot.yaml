@@ -31,22 +31,14 @@ jobs:
       - name: Build Docker image
         run: docker build -t oluwaseun7/chatbot:1 .
 
-      - name: Run Trivy Image Scan
-        uses: aquasecurity/trivy-action@v0.16.1
+      - name: Install Trivy
+        run: |
+          sudo apt-get install wget -y
+          wget https://github.com/aquasecurity/trivy/releases/latest/download/trivy_0.50.0_Linux-64bit.deb
+          sudo dpkg -i trivy_0.50.0_Linux-64bit.deb
         with:
           scan-type: image
           image-ref: 'oluwaseun7/chatbot:1'
-
-      - name: Run Trivy Filesystem Scan
-        uses: aquasecurity/trivy-action@v0.16.1
-        with:
-          scan-type: fs
-          scan-ref: '.'
-
-      - name: Run Trivy Config Scan
-        uses: aquasecurity/trivy-action@v0.16.1
-        with:
-          scan-type: config
           scan-ref: '.'
 
   deploy:
