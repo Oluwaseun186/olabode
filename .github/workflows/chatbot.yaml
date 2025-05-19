@@ -2,13 +2,13 @@ name: Node.js Docker CI/CD
 
 on:
   push:
-    branches: [ "origin" ]
+    branches: ["main"]  # Changed from "origin" to "main"
   pull_request:
-    branches: [ "origin" ]
+    branches: ["main"]  # Changed from "origin" to "main"
 
 env:
   REGISTRY: ghcr.io
-  #IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: Oluwaseun7/chatbot  # Uncommented and fixed
 
 jobs:
   build-and-test:
@@ -23,13 +23,13 @@ jobs:
           cache: 'npm'
       
       - name: Install dependencies
-        run: npm install
+        run: npm ci  # Changed from install to ci for consistency
       
       - name: Run tests
         run: npm test
 
       - name: Build Docker image
-        run: docker build -t oluwaseun7/chatbot:1 .
+        run: docker build -t ${{ env.IMAGE_NAME }}:1 .  # Using env variable
 
       - name: Run Trivy on Filesystem
         uses: aquasecurity/trivy-action@master
@@ -37,35 +37,35 @@ jobs:
           scan-type: fs
           scan-ref: '.'
           security-checks: 'vuln,secret,config'
+          exit-code: '1'
+          severity: 'CRITICAL,HIGH'
 
   deploy:
     needs: build-and-test
-    if: github.ref == 'refs/heads/origin'
+    if: github.ref == 'refs/heads/main'  # Changed from "origin" to "main"
     runs-on: ubuntu-latest
+    permissions:  # Added permissions
+      contents: read
+      packages: write
+      
     steps:
       - uses: actions/checkout@v4
       
       - name: Login to GHCR
         uses: docker/login-action@v3
         with:
-          registry: ghcr.io
+          registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-          
-      - name: Build and Push Docker Image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: ghcr.io/Oluwaseun7/chatbot:sha-${{ github.sha }}        
-
-
-      - name: Extract metadata (tags, labels) for Docker
+      - name: Extract metadata
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/Oluwaseun7/chatbot
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=sha
+            type=semver,pattern={{version}}
       
       - name: Build and push
         uses: docker/build-push-action@v5
@@ -74,3 +74,5 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
