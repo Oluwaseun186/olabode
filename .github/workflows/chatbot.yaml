@@ -51,15 +51,21 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
           
-      - name: Extract metadata
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/Oluwaseun7/chatbot:sha-${{ github.sha }}        
+
+
+      - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: |
-            type=sha
-            type=semver,pattern={{version}}
+          images: ghcr.io/Oluwaseun7/chatbot
       
       - name: Build and push
         uses: docker/build-push-action@v5
