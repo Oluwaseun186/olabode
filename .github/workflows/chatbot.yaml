@@ -42,7 +42,7 @@ jobs:
 
   deploy:
     needs: build-and-test
-    if: github.ref == 'refs/heads/main' 
+    if: github.ref == 'refs/heads/origin' 
     runs-on: ubuntu-latest
     permissions:  # Added permissions
       contents: read
