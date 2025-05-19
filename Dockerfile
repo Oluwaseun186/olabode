@@ -11,15 +11,6 @@ RUN npm ci --only=production
 # Copy source files
 COPY . .
 
-# Build the app
-RUN npm run build
-
-# Stage 2: Runtime
-FROM node:18-alpine
-
-# Set working directory
-WORKDIR /app
-
 # Install dependencies only
 COPY --from=builder /app/package.json /app/package-lock.json ./
 COPY --from=builder /app/node_modules ./node_modules
