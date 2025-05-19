@@ -1,4 +1,4 @@
-name: Node.js Docker CI/CD
+name: Olabode chatbot
 
 on:
   push:
@@ -101,4 +101,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/oluwaseun186/olabode:latestt
+          tags: oluwaseun7/${env.IMAGE_NAME}:1
