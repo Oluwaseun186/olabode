@@ -30,7 +30,7 @@ jobs:
 
       
       - name: Build Docker image
-        run: docker build -t ${{ env.IMAGE_NAME }} .
+        run: docker build -t ${{ env.REGISTRY }}/${{ github.repository }} .
       
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
