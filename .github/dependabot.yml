@@ -1,0 +1,47 @@
+version: 2
+updates:
+  # 📦 JavaScript
+  - package-ecosystem: "npm"
+    directory: "/"  # Location of package.json
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    rebase:
+      rebase-strategy: "auto"
+    labels:
+        - "dependencies"
+        - "npm"
+
+
+  # 🚀 GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+
+
+  # 🐳 Docker (optional)
+  - package-ecosystem: "docker"
+    directory: "/"  # where Dockerfile(s) live
+    schedule:
+      interval: "daily"
+    labels:
+      - "dependencies"
+      - "docker"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    open-pull-requests-limit: 5
+    versioning-strategy: "increase"
+
+  
