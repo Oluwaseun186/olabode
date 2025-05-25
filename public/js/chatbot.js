@@ -166,9 +166,9 @@ document.addEventListener('DOMContentLoaded', function() {
         else if (/(help|support|assistance)/.test(lowerCaseMessage)) {
             return `I can help with:
                 <ul>
-                    <li><a href="#" onclick="simulateQuestion('What time is it?')">Relationship matters</a></li>
-                    <li><a href="#" onclick="simulateQuestion('Tell me a joke')">Jokes</a></li>
-                    <li><a href="#" onclick="simulateQuestion('Calculate 5+3')">Career advice</a></li>
+                    <li><a href="#" onclick="simulateQuestion('What time is it?')">Time</a></li>
+                    <li><a href="https://chatgpt.com" onclick="simulateQuestion('Tell me a joke')">ChatGPT</a></li>
+                    <li><a href="https://www.linkedin.com/newsletters/code-with-olabode-7322547180253163520/" onclick="simulateQuestion('Calculate 5+3')">Explore my Newsletter</a></li>
                     <li><a href="#" target="_blank">Personal help</a></li>
                 </ul>`;
         }
